@@ -6,7 +6,7 @@ import NumberContainer from '../components/game/NumberContainer';
 import PrimaryButton from '../components/ui/PrimaryButton';
 import InstructionText from '../components/ui/InstructionText';
 import Card from '../components/ui/Card';
-import {Ionicons} from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 function generateRandomBetween(min, max, exclude) {
     const rndNum = Math.floor(Math.random() * (max - min)) + min;
@@ -34,7 +34,7 @@ function GameScreen({ userNumber, onGameOver }) {
 
     useEffect(() => {
         minBoundary = 1;
-        maxBoundary= 100;
+        maxBoundary = 100;
     }, []);
 
     function nextGuessHandler(direction) { // 'lower','greater'
@@ -59,23 +59,29 @@ function GameScreen({ userNumber, onGameOver }) {
             <Title>Opponent's Guess</Title>
             <NumberContainer>{currentGuess}</NumberContainer>
             <Card>
-                <InstructionText style= {styles.instructionText}>Higher or Lower?</InstructionText>
-                <View style = {styles.buttonsContainer}>
-                    <View style = {styles.buttonContainer}>
+                <InstructionText style={styles.instructionText}>Higher or Lower?</InstructionText>
+                <View style={styles.buttonsContainer}>
+                    <View style={styles.buttonContainer}>
                         <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>
-                            <Ionicons name = "md-remove" size = {24} color = "white"/>
+                            <Ionicons name="md-remove" size={24} color="white" />
                         </PrimaryButton>
                     </View>
-                    <View style = {styles.buttonContainer}>
+                    <View style={styles.buttonContainer}>
                         <PrimaryButton onPress={nextGuessHandler.bind(this, 'greater')}>
-                        <Ionicons name = "md-add" size = {24} color = "white"/>
+                            <Ionicons name="md-add" size={24} color="white" />
                         </PrimaryButton>
                     </View>
 
                 </View>
             </Card>
             <View>
-                {guessRounds.map(guessRounds => <Text key = {guessRounds}>{guessRounds}</Text>)}
+             
+                <FlatList
+                    data={guessRounds}
+                    renderItem={(itemData) => <Text>{itemData.item}</Text>}
+                    keyExtractor={(item) => item}
+                />
+
             </View>
         </View>
     )
