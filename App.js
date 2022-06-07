@@ -26,8 +26,9 @@ function pickedNumberHandler(pickedNumber){
   setGameisOver(false);
 }
 
-function gameOverHandler(){
+function gameOverHandler(numberOfRounds){
   setGameisOver(true);
+  setGuessRounds(numberOfRounds);
 }
 
 function startNewGameHandler(){
