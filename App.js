@@ -5,58 +5,63 @@ import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
 import Colors from './constants/color';
 import GameOverScreen from './screens/GameOverScreen';
-import {useFonts} from 'expo-font';
+import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
-const [userNumber, setUserNumber] = useState();
-const [gameIsOver, setGameisOver] = useState(true);
-const [guuessRounds, setGuessRounds] = useState(0);
+  const [userNumber, setUserNumber] = useState();
+  const [gameIsOver, setGameisOver] = useState(true);
+  const [guuessRounds, setGuessRounds] = useState(0);
 
-const [fontsLoaded] = useFonts({
-  'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
-  'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
-});
+  const [fontsLoaded] = useFonts({
+    'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+  });
 
-if (!fontsLoaded){
-  return <AppLoading />;}
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
-function pickedNumberHandler(pickedNumber){
-  setUserNumber(pickedNumber);
-  setGameisOver(false);
-}
+  function pickedNumberHandler(pickedNumber) {
+    setUserNumber(pickedNumber);
+    setGameisOver(false);
+  }
 
-function gameOverHandler(numberOfRounds){
-  setGameisOver(true);
-  setGuessRounds(numberOfRounds);
-}
+  function gameOverHandler(numberOfRounds) {
+    setGameisOver(true);
+    setGuessRounds(numberOfRounds);
+  }
 
-function startNewGameHandler(){
-  setUserNumber(null);
-  setGuessRounds(0);
-}
+  function startNewGameHandler() {
+    setUserNumber(null);
+    setGuessRounds(0);
+  }
 
-let screen = <StartGameScreen onPickNumber= {pickedNumberHandler}/>
+  let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />
 
-if (userNumber){
-  screen = <GameScreen userNumber= {userNumber} onGameOver = {gameOverHandler}/>
-}
+  if (userNumber) {
+    screen = <GameScreen userNumber={userNumber} onGameOver={gameOverHandler} />
+  }
 
-if (gameIsOver && userNumber){
-  screen = <GameOverScreen userNumber={userNumber} roundsNumber = {guuessRounds} onStartNewGame = {startNewGameHandler}/>
-}
+  if (gameIsOver && userNumber) {
+    screen = <GameOverScreen userNumber={userNumber} roundsNumber={guuessRounds} onStartNewGame={startNewGameHandler} />
+  }
 
 
   return (
-    <LinearGradient colors={[Colors.primary700, Colors.accent500]} style={styles.rootScreen}>
-      <ImageBackground source = {require('./assets/background.png')} resizeMode = "cover" style = {styles.rootScreen} imageStyle= {styles.backgroundImage}>
-        <SafeAreaView style = {styles.rootScreen}>
-        {screen}
+    <>
+      <StatusBar style = 'light'/>
+
+      <LinearGradient colors={[Colors.primary700, Colors.accent500]} style={styles.rootScreen}>
+        <ImageBackground source={require('./assets/background.png')} resizeMode="cover" style={styles.rootScreen} imageStyle={styles.backgroundImage}>
+          <SafeAreaView style={styles.rootScreen}>
+            {screen}
           </SafeAreaView>
-      </ImageBackground>
+        </ImageBackground>
 
-    </LinearGradient>
-
+      </LinearGradient>
+    </>
   );
 }
 
